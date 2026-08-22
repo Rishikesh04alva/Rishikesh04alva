@@ -2,12 +2,12 @@
 <!-- GitHub automatically displays dark.svg in dark mode and light.svg in light mode -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="light.svg">
-  <img alt="Rishikesh Alva" src="dark.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/light.svg">
+  <img alt="Rishikesh R Alva" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg" width="100%">
 </picture>
 
-<!-- ===== GITHUB STATS & METRICS ===== -->
+<!-- ===== GITHUB STATS & METRICS (SELF-HOSTED) ===== -->
 
 <div align="center">
 
@@ -21,37 +21,38 @@
 
 <!-- Stats + Top Languages — Side by Side -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-sigma-rosy-28.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&card_width=500" />
-  <img width="49%" src="https://github-readme-stats-sigma-rosy-28.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=0891B2&icon_color=7C3AED&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Rishikesh's GitHub Stats" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&card_width=500" />
+  <img width="49%" src="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=0891B2&icon_color=7C3AED&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Rishikesh's GitHub Stats" />
 </picture>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-sigma-rosy-28.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&card_width=500" />
-  <img width="49%" src="https://github-readme-stats-sigma-rosy-28.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=0891B2&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Top Languages" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&card_width=500" />
+  <img width="49%" src="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=0891B2&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Top Languages" />
 </picture>
 
 </div>
 
 <br/>
 
-<!-- ===== TECH STACK BADGES ===== -->
+<!-- ===== CONTRIBUTION SNAKE ANIMATION ===== -->
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Python-0A101F?style=for-the-badge&logo=python&logoColor=3776AB&labelColor=0A101F" alt="Python" />
-  <img src="https://img.shields.io/badge/JavaScript-0A101F?style=for-the-badge&logo=javascript&logoColor=F7DF1E&labelColor=0A101F" alt="JavaScript" />
-  <img src="https://img.shields.io/badge/React.js-0A101F?style=for-the-badge&logo=react&logoColor=61DAFB&labelColor=0A101F" alt="React" />
-  <img src="https://img.shields.io/badge/Node.js-0A101F?style=for-the-badge&logo=nodedotjs&logoColor=5FA04E&labelColor=0A101F" alt="Node.js" />
-  <img src="https://img.shields.io/badge/MongoDB-0A101F?style=for-the-badge&logo=mongodb&logoColor=47A248&labelColor=0A101F" alt="MongoDB" />
-  <img src="https://img.shields.io/badge/MySQL-0A101F?style=for-the-badge&logo=mysql&logoColor=4479A1&labelColor=0A101F" alt="MySQL" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-0A101F?style=for-the-badge&logo=tailwindcss&logoColor=06B6D4&labelColor=0A101F" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/Git-0A101F?style=for-the-badge&logo=git&logoColor=F05032&labelColor=0A101F" alt="Git" />
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-light.svg" />
+  <img alt="Rishikesh's contribution snake" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg" width="100%" />
+</picture>
+
 </div>
 
-<!-- ===== SOCIAL & CONNECT BADGES ===== -->
 <br/>
+
+<!-- ===== SOCIAL & CONNECT BADGES ===== -->
+
 <div align="center">
 
 <a href="https://www.linkedin.com/in/rishikesh-r-alva-78543a426/" target="_blank">
-  <img src="https://img.shields.io/badge/LinkedIn-0A101F?style=for-the-badge&logo=linkedin&logoColor=0A66C2&labelColor=0A101F" alt="LinkedIn" />
+  <img src="https://img.shields.io/badge/LinkedIn-0A101F?style=for-the-badge&logoColor=white&labelColor=0A101F&logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTIwLjQ0NyAyMC40NTJoLTMuNTU0di01LjU2OWMwLTEuMzI4LS4wMjctMy4wMzctMS44NTItMy4wMzctMS44NTMgMC0yLjEzNiAxLjQ0NS0yLjEzNiAyLjkzOXY1LjY2N0g5LjM1MVY5aDMuNDE0djEuNTYxaC4wNDZjLjQ3Ny0uOSAxLjYzNy0xLjg1IDMuMzctMS44NSAzLjYwMSAwIDQuMjY3IDIuMzcgNC4yNjcgNS40NTV2Ni4yODZ6TTUuMzM3IDcuNDMzYy0xLjE0NCAwLTIuMDYzLS45MjYtMi4wNjMtMi4wNjUgMC0xLjEzOC45Mi0yLjA2MyAyLjA2My0yLjA2MyAxLjE0IDAgMi4wNjQuOTI1IDIuMDY0IDIuMDYzIDAgMS4xMzktLjkyNSAyLjA2NS0yLjA2NCAyLjA2NXptMS43ODIgMTMuMDE5SDMuNTU1VjloMy41NjR2MTEuNDUyek0yMi4yMjUgMEgxLjc3MUMuNzkyIDAgMCAuNzc0IDAgMS43Mjl2MjAuNTQyQzAgMjMuMjI3Ljc5MiAyNCAxLjc3MSAyNGgyMC40NTFDMjMuMiAyNCAyNCAyMy4yMjcgMjQgMjIuMjcxVjEuNzI5QzI0IC43NzQgMjMuMiAwIDIyLjIyNSAweiIvPjwvc3ZnPg==" alt="LinkedIn" />
 </a>
 &nbsp;&nbsp;
 <a href="https://rishikeshportfolioforpc.netlify.app/" target="_blank">
@@ -63,15 +64,15 @@
 </a>
 &nbsp;&nbsp;
 <a href="https://www.instagram.com/rishixalva/" target="_blank">
-  <img src="https://img.shields.io/badge/Instagram-0A101F?style=for-the-badge&logo=instagram&logoColor=E4405F&labelColor=0A101F" alt="Instagram" />
+  <img src="https://img.shields.io/badge/Instagram-0A101F?style=for-the-badge&logo=instagram&logoColor=A78BFA&labelColor=0A101F" alt="Instagram" />
 </a>
 &nbsp;&nbsp;
 <a href="https://www.facebook.com/profile.php?id=61593864020858" target="_blank">
-  <img src="https://img.shields.io/badge/Facebook-0A101F?style=for-the-badge&logo=facebook&logoColor=1877F2&labelColor=0A101F" alt="Facebook" />
+  <img src="https://img.shields.io/badge/Facebook-0A101F?style=for-the-badge&logo=facebook&logoColor=22D3EE&labelColor=0A101F" alt="Facebook" />
 </a>
 &nbsp;&nbsp;
 <a href="mailto:rishikeshalvahere@gmail.com">
-  <img src="https://img.shields.io/badge/Email-0A101F?style=for-the-badge&logo=gmail&logoColor=EA4335&labelColor=0A101F" alt="Email" />
+  <img src="https://img.shields.io/badge/Email-0A101F?style=for-the-badge&logo=gmail&logoColor=10B981&labelColor=0A101F" alt="Email" />
 </a>
 
 </div>
