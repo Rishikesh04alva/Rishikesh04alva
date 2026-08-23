@@ -1,15 +1,16 @@
-import base64
-import io
-from PIL import Image, ImageOps, ImageEnhance
+from PIL import Image, ImageOps, ImageFilter, ImageEnhance
+import numpy as np
 
 # Load original user photo
 img = Image.open('ChatGPT Image Aug 15, 2026, 03_17_43 PM.png').convert('RGB')
 w, h = img.size
-WIDTH, HEIGHT = 400, 492
 
-# Crop head + upper body centered
-crop_top = int(h * 0.04)
-crop_bottom = int(h * 0.90)
+# Target dimensions for portrait grid (200x246 scaled 2.0x -> 400x492 in SVG)
+WIDTH, HEIGHT = 200, 246
+
+# Crop centered on head, face and upper body
+crop_top = int(h * 0.10)
+crop_bottom = int(h * 0.72)
 crop_h = crop_bottom - crop_top
 crop_w = int(crop_h * (WIDTH / HEIGHT))
 crop_left = max(0, (w - crop_w) // 2)
@@ -17,30 +18,81 @@ crop_right = min(w, crop_left + crop_w)
 
 img_cropped = img.crop((crop_left, crop_top, crop_right, crop_bottom))
 img_resized = img_cropped.resize((WIDTH, HEIGHT), Image.Resampling.LANCZOS)
+img_gray = img_resized.convert('L')
 
-# Dark mode version: slightly higher contrast and rich tone
-enhancer = ImageEnhance.Contrast(img_resized)
-img_dark = enhancer.enhance(1.15)
-buf_dark = io.BytesIO()
-img_dark.save(buf_dark, format='JPEG', quality=88, optimize=True)
-b64_dark = base64.b64encode(buf_dark.getvalue()).decode('ascii')
+# Enhance contrast & details for face clarity
+img_auto = ImageOps.autocontrast(img_gray, cutoff=2)
+arr = np.array(img_auto, dtype=np.float32)
+mean_v = np.mean(arr)
+arr = np.clip((arr - mean_v) * 1.45 + mean_v, 0, 255)
+img_sharp = Image.fromarray(arr.astype(np.uint8)).filter(ImageFilter.UnsharpMask(radius=2, percent=180))
 
-# Light mode version: crisp clean tone
-enhancer_light = ImageEnhance.Contrast(img_resized)
-img_light = enhancer_light.enhance(1.08)
-buf_light = io.BytesIO()
-img_light.save(buf_light, format='JPEG', quality=88, optimize=True)
-b64_light = base64.b64encode(buf_light.getvalue()).decode('ascii')
+# Atkinson Dithering for crisp, clean vector portraits
+def atkinson_dither(im, dark_mode=True):
+    a = np.array(im, dtype=np.float32).copy()
+    h_dim, w_dim = a.shape
+    dithered = np.zeros((h_dim, w_dim), dtype=np.uint8)
+    
+    threshold = 120 if dark_mode else 135
+    for y in range(h_dim):
+        for x in range(w_dim):
+            old = a[y, x]
+            if dark_mode:
+                new = 255 if old > threshold else 0
+                q = 1 if new == 255 else 0
+            else:
+                new = 0 if old < threshold else 255
+                q = 1 if new == 0 else 0
+            dithered[y, x] = q
+            err = (old - new) / 8.0
+            
+            if x + 1 < w_dim: a[y, x + 1] += err
+            if x + 2 < w_dim: a[y, x + 2] += err
+            if y + 1 < h_dim:
+                if x - 1 >= 0: a[y + 1, x - 1] += err
+                a[y + 1, x] += err
+                if x + 1 < w_dim: a[y + 1, x + 1] += err
+            if y + 2 < h_dim:
+                a[y + 2, x] += err
+    return dithered
 
-def render_svg(is_dark=True):
-    b64_img = b64_dark if is_dark else b64_light
+d_dark = atkinson_dither(img_sharp, dark_mode=True)
+d_light = atkinson_dither(img_sharp, dark_mode=False)
+
+def grid_to_runs(grid):
+    h_dim, w_dim = grid.shape
+    runs = []
+    for y in range(h_dim):
+        in_run = False
+        start_x = 0
+        for x in range(w_dim):
+            if grid[y, x] == 1:
+                if not in_run:
+                    in_run = True
+                    start_x = x
+            else:
+                if in_run:
+                    l = x - start_x
+                    runs.append(f'M{start_x} {y}h{l}v1h-{l}z' if l > 1 else f'M{start_x} {y}h1v1h-1z')
+                    in_run = False
+        if in_run:
+            l = w_dim - start_x
+            runs.append(f'M{start_x} {y}h{l}v1h-{l}z' if l > 1 else f'M{start_x} {y}h1v1h-1z')
+    return ''.join(runs)
+
+dark_path_data = grid_to_runs(d_dark)
+light_path_data = grid_to_runs(d_light)
+
+def render_full_banner(is_dark=True):
+    path_d = dark_path_data if is_dark else light_path_data
+    portrait_color = "#22D3EE" if is_dark else "#0891B2"
     bg_start = "#0A101F" if is_dark else "#F8FAFC"
     bg_end = "#0C1426" if is_dark else "#F1F5F9"
     window_border = "#070B16" if is_dark else "#E2E8F0"
     header_bg = "#0B1222" if is_dark else "#FFFFFF"
     header_line = "rgba(255,255,255,0.12)" if is_dark else "rgba(0,0,0,0.08)"
     header_title = "#94A3B8" if is_dark else "#64748B"
-    frame_stroke = "#22D3EE" if is_dark else "#0891B2"
+    frame_stroke = "rgba(34,211,238,0.5)" if is_dark else "rgba(8,145,178,0.4)"
     panel_bg = "#0A101F" if is_dark else "#FFFFFF"
     system_info_title = "#22D3EE" if is_dark else "#0891B2"
     dot_leader_color = "rgba(148,163,184,0.35)" if is_dark else "rgba(15,23,42,0.25)"
@@ -64,7 +116,7 @@ def render_svg(is_dark=True):
 <clipPath id="winClip">
   <rect x="2" y="2" width="1176" height="606" rx="18"/>
 </clipPath>
-<clipPath id="photoClip">
+<clipPath id="portraitClip">
   <rect x="36" y="84" width="400" height="492" rx="12"/>
 </clipPath>
 </defs>
@@ -84,8 +136,14 @@ def render_svg(is_dark=True):
 
 <!-- Left Photo Frame (Visual Map) -->
 <text x="38" y="74" font-size="10" letter-spacing="3" fill="#475569">VISUAL.MAP</text>
-<image href="data:image/jpeg;base64,{b64_img}" x="36" y="84" width="400" height="492" preserveAspectRatio="xMidYMid slice" clip-path="url(#photoClip)"/>
-<rect x="36" y="84" width="400" height="492" rx="12" fill="none" stroke="{frame_stroke}" stroke-width="2" opacity="0.6"/>
+<rect x="36" y="84" width="400" height="492" rx="12" fill="{panel_bg}" stroke="{frame_stroke}" stroke-width="1.5"/>
+
+<!-- Face Portrait Vector Artwork (100% Guaranteed Native SVG Path - Never stripped by GitHub) -->
+<g clip-path="url(#portraitClip)">
+  <g transform="translate(36, 84) scale(2.0, 2.0)" fill="{portrait_color}" shape-rendering="crispEdges">
+    <path d="{path_d}"/>
+  </g>
+</g>
 
 <!-- Right Info Panel -->
 <g transform="translate(0, 0)">
@@ -141,9 +199,9 @@ def render_svg(is_dark=True):
     return svg
 
 with open('dark.svg', 'w', encoding='utf-8') as f:
-    f.write(render_svg(is_dark=True))
+    f.write(render_full_banner(is_dark=True))
 
 with open('light.svg', 'w', encoding='utf-8') as f:
-    f.write(render_svg(is_dark=False))
+    f.write(render_full_banner(is_dark=False))
 
-print("Rendered HD photo facecard dark.svg and light.svg!")
+print("Rendered crisp Atkinson photo vector facecard dark.svg and light.svg!")
