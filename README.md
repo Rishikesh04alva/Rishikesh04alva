@@ -2,9 +2,9 @@
 <!-- GitHub automatically displays dark.svg in dark mode and light.svg in light mode -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/light.svg">
-  <img alt="Rishikesh R Alva" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg?v=5">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/light.svg?v=5">
+  <img alt="Rishikesh R Alva" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg?v=5" width="100%">
 </picture>
 
 <!-- ===== GITHUB STATS & METRICS (SELF-HOSTED) ===== -->

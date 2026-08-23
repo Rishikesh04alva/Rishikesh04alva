@@ -5,8 +5,8 @@ import numpy as np
 img = Image.open('ChatGPT Image Aug 15, 2026, 03_17_43 PM.png').convert('RGB')
 w, h = img.size
 
-# Target portrait dimensions in SVG: width=322, height=340
-WIDTH, HEIGHT = 322, 340
+# Target portrait dimensions in SVG grid: 180x190
+WIDTH, HEIGHT = 180, 190
 
 # Crop head + upper torso centered
 crop_top = int(h * 0.04)
@@ -26,7 +26,7 @@ arr_gray = np.array(img_auto, dtype=np.float32)
 mean_val = np.mean(arr_gray)
 arr_gray = np.clip((arr_gray - mean_val) * 1.35 + mean_val, 0, 255)
 img_contrast = Image.fromarray(arr_gray.astype(np.uint8))
-img_sharp = img_contrast.filter(ImageFilter.UnsharpMask(radius=3, percent=140))
+img_sharp = img_contrast.filter(ImageFilter.UnsharpMask(radius=2, percent=150))
 
 # Serpentine Floyd-Steinberg Dithering
 def dither_serpentine(im_gray, dark_mode=True):
@@ -137,7 +137,7 @@ def render_full_banner(is_dark=True):
 <rect x="36" y="84" width="400" height="492" rx="10" fill="{panel_bg}" stroke="{frame_stroke}"/>
 
 <!-- Portrait Group: Centered inside 400x492 frame (x=36..436, y=84..576) -->
-<g transform="translate(40, 100) scale(1.220, 1.340)" fill="{portrait_color}" shape-rendering="crispEdges">
+<g transform="translate(46, 96) scale(2.10, 2.45)" fill="{portrait_color}" shape-rendering="crispEdges">
   <path d="{path_d}"/>
 </g>
 
@@ -199,4 +199,4 @@ with open('dark.svg', 'w', encoding='utf-8') as f:
 with open('light.svg', 'w', encoding='utf-8') as f:
     f.write(render_full_banner(is_dark=False))
 
-print("Rendered and wrote guaranteed 100% visible dark.svg and light.svg!")
+print("Rendered ultra-light crisp dark.svg and light.svg!")
