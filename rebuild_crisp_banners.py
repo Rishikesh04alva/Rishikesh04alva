@@ -34,11 +34,6 @@ def dither_serpentine(im_gray, dark_mode=True):
     h_dim, w_dim = arr.shape
     dithered = np.zeros((h_dim, w_dim), dtype=np.uint8)
 
-    # Invert for dark mode so bright skin/eyes/highlights become dots
-    if dark_mode:
-        # High value = lit pixel = dot in dark mode
-        pass
-
     for y in range(h_dim):
         x_range = range(w_dim) if y % 2 == 0 else range(w_dim - 1, -1, -1)
         direction = 1 if y % 2 == 0 else -1
@@ -46,18 +41,15 @@ def dither_serpentine(im_gray, dark_mode=True):
         for x in x_range:
             old_val = arr[y, x]
             if dark_mode:
-                # Dot when brightness > 120
                 quant_val = 1 if old_val > 115 else 0
                 target_val = 255 if quant_val == 1 else 0
             else:
-                # Dot when dark < 140
                 quant_val = 1 if old_val < 140 else 0
                 target_val = 0 if quant_val == 1 else 255
 
             dithered[y, x] = quant_val
             err = old_val - target_val
 
-            # Distribute error
             if 0 <= x + direction < w_dim:
                 arr[y, x + direction] += err * (7.0 / 16.0)
             if y + 1 < h_dim:
@@ -72,48 +64,39 @@ def dither_serpentine(im_gray, dark_mode=True):
 dither_dark = dither_serpentine(img_sharp, dark_mode=True)
 dither_light = dither_serpentine(img_sharp, dark_mode=False)
 
-dark_points = np.argwhere(dither_dark == 1) # (y, x)
-light_points = np.argwhere(dither_light == 1)
-
-dark_pts = np.stack([dark_points[:, 1], dark_points[:, 0]], axis=1)
-light_pts = np.stack([light_points[:, 1], light_points[:, 0]], axis=1)
-
-print(f"Generated clean dither dots: Dark={len(dark_pts)}, Light={len(light_pts)}")
-
-# Convert to horizontal runs
-def points_to_runs(pts):
-    if len(pts) == 0:
-        return ""
-    pts_sorted = sorted(list(pts), key=lambda p: (p[1], p[0]))
+def grid_to_runs(binary_grid):
+    h_dim, w_dim = binary_grid.shape
     runs = []
-    cur_x, cur_y = pts_sorted[0]
-    cur_len = 1
-    for x, y in pts_sorted[1:]:
-        if y == cur_y and x == cur_x + cur_len:
-            cur_len += 1
-        else:
-            if cur_len == 1:
-                runs.append(f"M{int(cur_x)} {int(cur_y)}h1v1h-1z")
+    for y in range(h_dim):
+        in_run = False
+        start_x = 0
+        for x in range(w_dim):
+            if binary_grid[y, x] == 1:
+                if not in_run:
+                    in_run = True
+                    start_x = x
             else:
-                runs.append(f"M{int(cur_x)} {int(cur_y)}h{cur_len}v1h-{cur_len}z")
-            cur_x, cur_y = x, y
-            cur_len = 1
-    if cur_len == 1:
-        runs.append(f"M{int(cur_x)} {int(cur_y)}h1v1h-1z")
-    else:
-        runs.append(f"M{int(cur_x)} {int(cur_y)}h{cur_len}v1h-{cur_len}z")
+                if in_run:
+                    length = x - start_x
+                    if length == 1:
+                        runs.append(f"M{start_x} {y}h1v1h-1z")
+                    else:
+                        runs.append(f"M{start_x} {y}h{length}v1h-{length}z")
+                    in_run = False
+        if in_run:
+            length = w_dim - start_x
+            if length == 1:
+                runs.append(f"M{start_x} {y}h1v1h-1z")
+            else:
+                runs.append(f"M{start_x} {y}h{length}v1h-{length}z")
     return "".join(runs)
 
-# Compute 60 interleaved random intro groups for shimmering reveal
-NUM_GROUPS = 60
-group_idx_dark = np.random.randint(0, NUM_GROUPS, size=len(dark_pts))
-group_idx_light = np.random.randint(0, NUM_GROUPS, size=len(light_pts))
+dark_path_data = grid_to_runs(dither_dark)
+light_path_data = grid_to_runs(dither_light)
 
 # Build SVG
 def render_full_banner(is_dark=True):
-    pts = dark_pts if is_dark else light_pts
-    group_idx = group_idx_dark if is_dark else group_idx_light
-    
+    path_d = dark_path_data if is_dark else light_path_data
     portrait_color = "#A78BFA" if is_dark else "#7C3AED"
     bg_start = "#0A101F" if is_dark else "#F8FAFC"
     bg_end = "#0C1426" if is_dark else "#F1F5F9"
@@ -158,21 +141,23 @@ def render_full_banner(is_dark=True):
 <rect x="36" y="84" width="400" height="492" rx="10" fill="{panel_bg}" stroke="{frame_stroke}"/>
 
 <!-- Portrait Group: Centered inside 400x492 frame (x=36..436, y=84..576) -->
-<!-- 322x340 grid scaled 1.22x -> ~392x415, positioned at (40, 100) -->
 <g transform="translate(40, 100) scale(1.220, 1.340)" fill="{portrait_color}" shape-rendering="crispEdges">
+  <path d="{path_d}" opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.2s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .2 1"/>
+  </path>
+</g>
+
+<!-- Right Info Panel -->
+<g transform="translate(0, 0)">
+<text x="470" y="106" font-size="13" letter-spacing="2" fill="{system_info_title}" filter="url(#txtGlow)">SYSTEM.INFO</text>
+<line x1="566" y1="102" x2="1061" y2="102" stroke="{header_line}"/>
+<text x="1125" y="106" text-anchor="end" font-size="12" fill="{live_badge_color}" font-weight="700"><tspan>&#9679;</tspan> LIVE<animate attributeName="opacity" values="1;0.25;1" dur="1.6s" repeatCount="indefinite"/></text>
+
+<rect x="470" y="122" width="245" height="20" rx="4" fill="{("#4C1D95" if is_dark else "#E0E7FF")}"/>
+<text x="479" y="136" font-size="14" font-weight="700" fill="{("#E9D5FF" if is_dark else "#4338CA")}">rishikeshalvahere@gmail.com</text>
+<line x1="725" y1="130" x2="1125" y2="130" stroke="{header_line}"/>
 '''
 
-    # Shimmer fade-in across 60 groups, staying permanently crisp and visible!
-    for g in range(NUM_GROUPS):
-        sub_pts = pts[group_idx == g]
-        path_d = points_to_runs(sub_pts)
-        if path_d:
-            t_begin = 0.15 + (g * 0.03)
-            svg += f'''<g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.8s" begin="{t_begin:.2f}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .2 1"/><path d="{path_d}"/></g>\n'''
-
-    svg += '</g>\n'
-
-    # Right Info Panel
     rows_data = [
         ("Subject", "Rishikesh R Alva", 0.85),
         ("Role", "AI Engineer | Full-Stack Dev", 0.98),
@@ -193,16 +178,6 @@ def render_full_banner(is_dark=True):
         ("Grid.Twitter/X", "@AlvaRishihere", 3.08),
     ]
 
-    svg += f'''<g transform="translate(0, 0)">
-<text x="470" y="106" font-size="13" letter-spacing="2" fill="{system_info_title}" filter="url(#txtGlow)">SYSTEM.INFO</text>
-<line x1="566" y1="102" x2="1061" y2="102" stroke="{header_line}"/>
-<text x="1125" y="106" text-anchor="end" font-size="12" fill="{live_badge_color}" font-weight="700"><tspan>&#9679;</tspan> LIVE<animate attributeName="opacity" values="1;0.25;1" dur="1.6s" repeatCount="indefinite"/></text>
-
-<rect x="470" y="122" width="245" height="20" rx="4" fill="{("#4C1D95" if is_dark else "#E0E7FF")}"/>
-<text x="479" y="136" font-size="14" font-weight="700" fill="{("#E9D5FF" if is_dark else "#4338CA")}">rishikeshalvahere@gmail.com</text>
-<line x1="725" y1="130" x2="1125" y2="130" stroke="{header_line}"/>
-'''
-
     y_pos = 160
     for label, val, begin_t in rows_data:
         dots_count = max(4, 75 - len(label) - len(val))
@@ -212,7 +187,7 @@ def render_full_banner(is_dark=True):
             svg += f'''<g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="2.36s" fill="freeze"/><text x="470" y="{y_pos}" font-size="14" textLength="655" lengthAdjust="spacingAndGlyphs" xml:space="preserve"><tspan fill="{footer_text}">- Contact </tspan><tspan fill="{dot_leader_color}">---------------------------------------------------------------------</tspan></text></g>\n'''
             y_pos += 22
 
-        svg += f'''<g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="{begin_t:.2f}s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="-8 0;0 0" dur="0.4s" begin="{begin_t:.2f}s" fill="freeze"/><text x="470" y="{y_pos}" font-size="14" textLength="655" lengthAdjust="spacingAndGlyphs" xml:space="preserve"><tspan fill="{label_color}">{label} </tspan><tspan fill="{dot_leader_color}">{dots_str}</tspan><tspan fill="{val_color}" font-weight="600"> {val}</tspan></text></g>\n'''
+        svg += f'''<g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="{begin_t:.2f}s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="-8 0;0 0" dur="0.4s" begin="{begin_t:.2f}s" fill="freeze"/><text x="470" y="{y_pos}" font-size="14" textLength="655" lengthAdjust="spacingAndGlyphs" xml:space="preserve"><tspan fill="{label_color}">{label} </tspan><tspan fill="{dot_leader_color}"> {dots_str} </tspan><tspan fill="{val_color}" font-weight="600"> {val}</tspan></text></g>\n'''
         y_pos += 22
 
     svg += f'''<g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="3.30s" fill="freeze"/>
@@ -233,4 +208,4 @@ with open('dark.svg', 'w', encoding='utf-8') as f:
 with open('light.svg', 'w', encoding='utf-8') as f:
     f.write(render_full_banner(is_dark=False))
 
-print("Rendered and wrote crisp visible dark.svg and light.svg!")
+print("Rendered and wrote optimized crisp dark.svg and light.svg!")
