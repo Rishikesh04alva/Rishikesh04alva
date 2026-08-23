@@ -1,11 +1,15 @@
 <!-- ===== THEME-AWARE HERO BANNER ===== -->
 <!-- GitHub automatically displays dark.svg in dark mode and light.svg in light mode -->
 
+<div align="center">
+
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg?v=5">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/light.svg?v=5">
-  <img alt="Rishikesh R Alva" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg?v=5" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg?v=6#gh-dark-mode-only">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/light.svg?v=6#gh-light-mode-only">
+  <img alt="Rishikesh R Alva" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/dark.svg?v=6" width="100%">
 </picture>
+
+</div>
 
 <!-- ===== GITHUB STATS & METRICS (SELF-HOSTED) ===== -->
 
@@ -38,9 +42,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-light.svg" />
-  <img alt="Rishikesh's contribution snake" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg" width="100%" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg?v=6#gh-dark-mode-only" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-light.svg?v=6#gh-light-mode-only" />
+  <img alt="Rishikesh's contribution snake" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg?v=6" width="100%" />
 </picture>
 
 </div>
