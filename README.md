@@ -11,7 +11,7 @@
 
 </div>
 
-<!-- ===== GITHUB STATS & METRICS (SELF-HOSTED) ===== -->
+<!-- ===== GITHUB STATS & METRICS ===== -->
 
 <div align="center">
 
@@ -25,12 +25,12 @@
 
 <!-- Stats + Top Languages — Side by Side -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&card_width=500" />
-  <img width="49%" src="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=0891B2&icon_color=7C3AED&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Rishikesh's GitHub Stats" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fast.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&card_width=500" />
+  <img width="49%" src="https://github-readme-stats-fast.vercel.app/api?username=Rishikesh04alva&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=0891B2&icon_color=7C3AED&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Rishikesh's GitHub Stats" />
 </picture>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&card_width=500" />
-  <img width="49%" src="https://github-readme-stats-fyvu54y8d-rishikesh04alvas-projects.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=0891B2&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Top Languages" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&card_width=500" />
+  <img width="49%" src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=Rishikesh04alva&layout=compact&langs_count=8&hide_border=true&title_color=0891B2&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Top Languages" />
 </picture>
 
 </div>
@@ -42,9 +42,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-light.svg" />
-  <img alt="Rishikesh's contribution snake" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/output/snake-dark.svg" width="100%" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/snake-light.svg" />
+  <img alt="Rishikesh's contribution snake" src="https://raw.githubusercontent.com/Rishikesh04alva/Rishikesh04alva/main/snake-dark.svg" width="100%" />
 </picture>
 
 </div>
