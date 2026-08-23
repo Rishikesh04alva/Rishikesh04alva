@@ -25,10 +25,14 @@ jobs:
       - name: Generate Snake SVGs
         uses: Platane/snk/svg-only@v3
         with:
-          github_user_name: ${{ github.repository_owner }}
+          github_user_name: Rishikesh04alva
           outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
             dist/snake-light.svg
-            dist/snake-dark.svg?palette=github-dark&color_snake=#10B981&color_dots=#2d3343,#0891B2,#22D3EE,#A78BFA,#7C3AED
+            dist/snake-dark.svg?palette=github-dark
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Deploy output SVGs to output branch
       - name: Push Snake SVGs to Output Branch
